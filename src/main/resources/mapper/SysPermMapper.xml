@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lx.study.springshiro.dao.SysPermMapper">
+  <resultMap id="BaseResultMap" type="com.lx.study.springshiro.entity.SysPerm">
+    <!--@mbg.generated-->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="perm_name" jdbcType="VARCHAR" property="permName" />
+    <result column="perm_desc" jdbcType="VARCHAR" property="permDesc" />
+    <result column="perm_value" jdbcType="VARCHAR" property="permValue" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_disable" jdbcType="INTEGER" property="isDisable" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, perm_name, perm_desc, perm_value, create_time, update_time, is_disable
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from sys_perm
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!--@mbg.generated-->
+    delete from sys_perm
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lx.study.springshiro.entity.SysPerm">
+    <!--@mbg.generated-->
+    insert into sys_perm (id, perm_name, perm_desc, 
+      perm_value, create_time, update_time, 
+      is_disable)
+    values (#{id,jdbcType=VARCHAR}, #{permName,jdbcType=VARCHAR}, #{permDesc,jdbcType=VARCHAR}, 
+      #{permValue,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{isDisable,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lx.study.springshiro.entity.SysPerm">
+    <!--@mbg.generated-->
+    insert into sys_perm
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="permName != null">
+        perm_name,
+      </if>
+      <if test="permDesc != null">
+        perm_desc,
+      </if>
+      <if test="permValue != null">
+        perm_value,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDisable != null">
+        is_disable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="permName != null">
+        #{permName,jdbcType=VARCHAR},
+      </if>
+      <if test="permDesc != null">
+        #{permDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="permValue != null">
+        #{permValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDisable != null">
+        #{isDisable,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lx.study.springshiro.entity.SysPerm">
+    <!--@mbg.generated-->
+    update sys_perm
+    <set>
+      <if test="permName != null">
+        perm_name = #{permName,jdbcType=VARCHAR},
+      </if>
+      <if test="permDesc != null">
+        perm_desc = #{permDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="permValue != null">
+        perm_value = #{permValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDisable != null">
+        is_disable = #{isDisable,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lx.study.springshiro.entity.SysPerm">
+    <!--@mbg.generated-->
+    update sys_perm
+    set perm_name = #{permName,jdbcType=VARCHAR},
+      perm_desc = #{permDesc,jdbcType=VARCHAR},
+      perm_value = #{permValue,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_disable = #{isDisable,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="findPermValueByUserId" parameterType="String" resultType="java.lang.String">
+    select sp.perm_value from sys_perm sp, role_perm rp, user_role ur where ur.user_id=#{userId} and sp.id=rp.perm_id and rp.role_id
+  </select>
+
+  <select id="getALLPermValue" parameterType="String" resultType="java.lang.String">
+    select sys_perm.perm_value from sys_perm
+  </select>
+</mapper>
